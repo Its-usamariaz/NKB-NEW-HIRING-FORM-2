@@ -1,203 +1,362 @@
+
 <!DOCTYPE html>
 <html lang="en">
-const http = require("node:http");
-const fs = require("node:fs/promises");
-const path = require("node:path");
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cricket Wireless | Job Application</title>
+<style>
+:root{
+  font-family:Inter,-apple-system,BlinkMacSystemFont,
+  "Segoe UI",Arial,sans-serif;
+  color:#252830;
+  background:#eef0f7;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:14px 20px 38px}
+.shell{
+  max-width:1050px;margin:auto;background:white;
+  border-radius:13px;overflow:hidden;
+  box-shadow:0 8px 28px #202c4510;
+}
+.hero{
+  padding:55px 74px 53px;
+  border-bottom:1px solid #e5e8f1;
+}
+.brand{
+  font-size:53px;font-weight:900;
+  letter-spacing:-4px;line-height:1;color:#211f20;
+}
+.brand .k{color:#59bc32}
+.brand sup{
+  font-size:10px;letter-spacing:0;
+  vertical-align:top;
+}
+.wireless{
+  font-weight:800;font-size:25px;
+  letter-spacing:-1px;margin-top:-4px;
+}
+.hero h1{
+  font-size:31px;letter-spacing:-1px;
+  margin:52px 0 0;font-weight:750;
+}
+.body{padding:56px 74px 53px}
+.section{
+  padding-bottom:45px;margin-bottom:40px;
+  border-bottom:1px solid #e4e7ef;
+}
+.section-title{
+  display:flex;align-items:center;gap:25px;
+  font-size:23px;margin:0 0 31px;
+}
+.clear,.reset{
+  border:0;background:none;color:#aeb8e4;
+  font:inherit;font-size:18px;font-weight:700;
+  cursor:pointer;
+}
+.clear:hover,.reset:hover{color:#6672e8}
+.field{margin-bottom:30px}
+.field:last-child{margin-bottom:0}
+label{
+  display:block;font-size:18px;font-weight:700;
+  margin-bottom:13px;
+}
+.req{color:#fa513e}
+input,select{
+  width:100%;height:60px;
+  border:1px solid #cdd4e7;border-radius:10px;
+  background:white;padding:0 19px;
+  font:inherit;font-size:18px;color:#252830;
+  outline:none;
+}
+input:focus,select:focus{
+  border-color:#7d88ff;
+  box-shadow:0 0 0 4px #7786ff25;
+}
+input::placeholder{color:#9ba4bf}
+select{cursor:pointer}
+.phone{
+  display:grid;grid-template-columns:205px 1fr;
+  gap:16px;
+}
+.date-time{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:27px;
+}
+.date-time input{min-width:0}
+.conditional[hidden]{display:none}
+.consent{
+  background:#f7f8fc;
+  border:1px solid #e2e6f0;
+  border-radius:10px;color:#56617d;
+  font-size:16px;line-height:1.65;
+  padding:21px 25px;
+}
+.actions{
+  display:flex;justify-content:flex-end;
+  align-items:center;gap:25px;margin-top:33px;
+}
+.submit{
+  border:0;border-radius:40px;
+  background:#6674e8;color:white;
+  font-size:19px;font-weight:700;
+  padding:16px 43px;cursor:pointer;
+}
+.submit:hover{background:#5363d8}
+.submit:disabled{opacity:.6;cursor:wait}
+.success{
+  display:none;text-align:center;
+  padding:80px 20px;
+}
+.success h2{font-size:32px}
+.success p{font-size:20px;color:#56617d}
+@media(max-width:700px){
+  body{padding:10px}
+  .hero{padding:34px 23px}
+  .brand{font-size:47px}
+  .wireless{font-size:23px}
+  .hero h1{font-size:27px;margin-top:39px}
+  .body{padding:33px 23px}
+  .section-title{font-size:21px;gap:15px}
+  .clear,.reset{font-size:16px}
+  label{font-size:16px}
+  input,select{height:54px;font-size:16px}
+  .phone{grid-template-columns:115px 1fr;gap:9px}
+  .date-time{gap:9px}
+  .consent{font-size:14px;padding:17px}
+  .submit{font-size:17px;padding:14px 31px}
+}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="hero">
+  <div aria-label="Cricket Wireless">
+    <div class="brand">cric<span class="k">k</span>et<sup>™</sup></div>
+    <div class="wireless">wireless</div>
+  </div>
+  <h1>Job Application Form</h1>
+</header>
 
-const PORT = process.env.PORT || 3000;
-const FLOW_URL = process.env.POWER_AUTOMATE_URL;
+<div class="body">
+<form id="application">
 
-const submissionScript = `
+<section class="section" id="basic">
+<h2 class="section-title">
+  Basic Info
+  <button type="button" class="clear" data-section="basic">Clear</button>
+</h2>
+
+<div class="field">
+<label for="fullname">Full Name <span class="req">*</span></label>
+<input id="fullname" name="fullName" required autocomplete="name">
+</div>
+
+<div class="field">
+<label for="mobile">Mobile <span class="req">*</span></label>
+<div class="phone">
+<select name="countryCode" aria-label="Country calling code" required>
+<option value="+1">🇺🇸 (+1)</option>
+<option value="+44">🇬🇧 (+44)</option>
+<option value="+92">🇵🇰 (+92)</option>
+<option value="+91">🇮🇳 (+91)</option>
+<option value="+1-CA">🇨🇦 (+1)</option>
+<option value="+52">🇲🇽 (+52)</option>
+</select>
+<input id="mobile" name="mobile" type="tel" required autocomplete="tel-national">
+</div>
+</div>
+
+<div class="field">
+<label for="email">Email <span class="req">*</span></label>
+<input id="email" name="email" type="email" required autocomplete="email">
+</div>
+
+<div class="field">
+<label for="age">Age <span class="req">*</span></label>
+<input id="age" name="age" type="number" min="1" max="120" required>
+</div>
+</section>
+
+<section class="section" id="address">
+<h2 class="section-title">
+  Address Information
+  <button type="button" class="clear" data-section="address">Clear</button>
+</h2>
+
+<div class="field">
+<label for="city">City <span class="req">*</span></label>
+<input id="city" name="city" required autocomplete="address-level2">
+</div>
+
+<div class="field">
+<label for="zip">Zip/Postal Code <span class="req">*</span></label>
+<input id="zip" name="postalCode" required autocomplete="postal-code">
+</div>
+</section>
+
+<section class="section" id="professional">
+<h2 class="section-title">
+  Professional Details
+  <button type="button" class="clear" data-section="professional">Clear</button>
+</h2>
+
+<div class="field">
+<label for="experience">Experience <span class="req">*</span></label>
+<select id="experience" name="experience" required>
+<option value="">-None-</option>
+<option>No Experience</option>
+<option>Less than 6 months</option>
+<option>6 - 12 months</option>
+<option>1-2 Years</option>
+<option>2+ Years</option>
+</select>
+</div>
+
+<div class="field">
+<label for="spanish">Spanish proficiency <span class="req">*</span></label>
+<select id="spanish" name="spanishProficiency" required>
+<option value="">-None-</option>
+<option>None</option>
+<option>Basic</option>
+<option>Conversational</option>
+<option>Fluent</option>
+<option>Native/Bilingual</option>
+</select>
+</div>
+
+<div class="field">
+<label for="relocation">Relocation availability <span class="req">*</span></label>
+<select id="relocation" name="relocation" required>
+<option value="">-None-</option>
+<option>Yes</option>
+<option>No</option>
+<option>Maybe</option>
+</select>
+</div>
+
+<div class="field">
+<label for="interviewDate">Interview availability <span class="req">*</span></label>
+<div class="date-time">
+<input id="interviewDate" name="interviewDate"
+  type="date" required>
+<input id="interviewTime" name="interviewTime"
+  type="time" value="19:00" required>
+</div>
+</div>
+
+<div class="field">
+<label for="start">Earliest available start date <span class="req">*</span></label>
+<select id="start" name="startDate" required>
+<option value="">-None-</option>
+<option>Immediately</option>
+<option>Within 1 week</option>
+<option>Within 2 weeks</option>
+<option>Within 1 month</option>
+<option>More than 1 month</option>
+</select>
+</div>
+
+<div class="field">
+<label for="source">How did you find out about us? <span class="req">*</span></label>
+<select id="source" name="source" required>
+<option value="">-None-</option>
+<option>Whatsapp</option>
+<option>Facebook</option>
+<option>Indeed</option>
+<option>Referral</option>
+<option>Other</option>
+</select>
+</div>
+
+<div class="field conditional" id="referralWrap" hidden>
+<label for="referral">Referral name <span class="req">*</span></label>
+<input id="referral" name="referralName">
+</div>
+
+<div class="field conditional" id="otherWrap" hidden>
+<label for="other">Please specify <span class="req">*</span></label>
+<input id="other" name="otherSource">
+</div>
+</section>
+
+<div class="consent">
+By submitting this form, you agree to be contacted by
+Cricket Wireless – Authorized Retailer by phone,
+text message, or email regarding your job application.
+Message and data rates may apply. You can opt out at
+any time by replying STOP.
+</div>
+
+<div class="actions">
+<button class="reset" type="reset">Reset</button>
+<button class="submit" type="submit">Submit</button>
+</div>
+
+</form>
+
+<div id="success" class="success" role="status">
+<h2>✓ Application submitted</h2>
+<p>Thank you. We'll review your application and be in touch.</p>
+<button type="button" class="submit" id="again">
+New application
+</button>
+</div>
+
+</div>
+</main>
+
 <script>
-(() => {
-  const form = document.getElementById("application");
-  const success = document.getElementById("success");
-  const submitButton = form.querySelector('[type="submit"]');
+const form = document.getElementById("application");
+const source = document.getElementById("source");
+const success = document.getElementById("success");
 
-  form.addEventListener("submit", async (event) => {
-    // Override the old demonstration-only submission.
-    event.preventDefault();
-    event.stopImmediatePropagation();
+function updateConditional() {
+  const referral = source.value === "Referral";
+  const other = source.value === "Other";
 
-    if (!form.reportValidity()) return;
+  document.getElementById("referralWrap").hidden = !referral;
+  document.getElementById("otherWrap").hidden = !other;
 
-    const data = Object.fromEntries(new FormData(form).entries());
+  document.getElementById("referral").required = referral;
+  document.getElementById("other").required = other;
 
-    submitButton.disabled = true;
-    submitButton.textContent = "Submitting...";
-
-    try {
-      const response = await fetch("/api/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-
-      if (!response.ok) {
-        throw new Error("Submission failed");
-      }
-
-      form.style.display = "none";
-      success.style.display = "block";
-
-      const demoNotice = success.querySelector("p[style]");
-      if (demoNotice) demoNotice.remove();
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-
-    } catch (error) {
-      alert("Unable to submit your application. Please try again.");
-    } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = "Submit";
-    }
-  }, true);
-})();
-</script>
-`;
-
-function reply(res, status, payload) {
-  res.writeHead(status, {
-    "Content-Type": "application/json",
-    "Cache-Control": "no-store"
-  });
-  res.end(JSON.stringify(payload));
+  if (!referral) document.getElementById("referral").value = "";
+  if (!other) document.getElementById("other").value = "";
 }
 
-const fields = [
-  "fullName",
-  "countryCode",
-  "mobile",
-  "email",
-  "age",
-  "city",
-  "postalCode",
-  "experience",
-  "spanishProficiency",
-  "relocation",
-  "interviewDate",
-  "interviewTime",
-  "startDate",
-  "source",
-  "referralName",
-  "otherSource"
-];
+source.addEventListener("change", updateConditional);
 
-const required = [
-  "fullName",
-  "mobile",
-  "email",
-  "age",
-  "city",
-  "postalCode",
-  "experience",
-  "spanishProficiency",
-  "relocation",
-  "interviewDate",
-  "interviewTime",
-  "startDate",
-  "source"
-];
+document.querySelectorAll(".clear").forEach(button => {
+  button.addEventListener("click", () => {
+    const section = document.getElementById(button.dataset.section);
 
-http.createServer(async (req, res) => {
-
-  // Display your existing HTML form.
-  if (req.method === "GET" &&
-      (req.url === "/" || req.url === "/index.html")) {
-
-    try {
-      let html = await fs.readFile(
-        path.join(__dirname, "index.html"),
-        "utf8"
-      );
-
-      // Add working submission logic without changing the design.
-      html = html.replace("</body>", submissionScript + "</body>");
-
-      res.writeHead(200, {
-        "Content-Type": "text/html; charset=utf-8"
-      });
-      res.end(html);
-
-    } catch (error) {
-      reply(res, 500, { error: "Unable to load form" });
-    }
-    return;
-  }
-
-  // Receive application and forward it to Power Automate.
-  if (req.method === "POST" && req.url === "/api/submit") {
-
-    if (!FLOW_URL) {
-      reply(res, 503, { error: "Power Automate not configured" });
-      return;
-    }
-
-    try {
-      let body = "";
-
-      for await (const chunk of req) {
-        body += chunk.toString();
-
-        if (body.length > 20000) {
-          reply(res, 413, { error: "Request too large" });
-          return;
-        }
+    section.querySelectorAll("input,select").forEach(element => {
+      if (element.tagName === "SELECT") {
+        element.selectedIndex = 0;
+      } else {
+        element.value = element.id === "interviewTime" ? "19:00" : "";
       }
+    });
 
-      const input = JSON.parse(body);
-      const application = {};
-
-      for (const field of fields) {
-        application[field] =
-          input[field] == null ? "" : String(input[field]).trim();
-      }
-
-      if (required.some(field => !application[field])) {
-        reply(res, 400, { error: "Missing required fields" });
-        return;
-      }
-
-      if (
-        (application.source === "Referral" &&
-          !application.referralName) ||
-        (application.source === "Other" &&
-          !application.otherSource)
-      ) {
-        reply(res, 400, {
-          error: "Missing referral or source information"
-        });
-        return;
-      }
-
-      const response = await fetch(FLOW_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(application),
-        signal: AbortSignal.timeout(30000)
-      });
-
-      if (!response.ok) {
-        console.error("Power Automate status:", response.status);
-        reply(res, 502, {
-          error: "Power Automate rejected the submission"
-        });
-        return;
-      }
-
-      reply(res, 200, { success: true });
-
-    } catch (error) {
-      console.error("Submission error:", error.message);
-      reply(res, 500, { error: "Submission unsuccessful" });
-    }
-    return;
-  }
-
-  reply(res, 404, { error: "Not found" });
-
-}).listen(PORT, "0.0.0.0", () => {
-  console.log("NKB Hiring Form running on port " + PORT);
+    updateConditional();
+  });
 });
+
+form.addEventListener("reset", () => {
+  setTimeout(updateConditional, 0);
+});
+
+document.getElementById("again").addEventListener("click", () => {
+  form.reset();
+  form.style.display = "block";
+  success.style.display = "none";
+  updateConditional();
+});
+
+// Submit is handled by the existing Render server.js,
+// which adds the secure submission handler to this page.
+updateConditional();
+</script>
+</body>
+</html>
